@@ -4,6 +4,8 @@ import * as vscode from "vscode";
 import { getPreviousPosition } from "./getPreviousPosition";
 import { PrefixSearchState } from "./PrefixSearchState";
 import { clearState } from "./clearState";
+import { getWordBeforePosition } from "./getWordBeforePosition";
+import { findMatchingWordPrefix } from "./findMatchingWordPrefix";
 
 const stateMap = new WeakMap<vscode.TextDocument, PrefixSearchState>();
 
@@ -46,7 +48,7 @@ export function activate(context: vscode.ExtensionContext) {
 
             // const line = editor.document.lineAt(position);
             const wordRange =
-                state.prefixRange || getWordBeforeCursor(editor, position);
+                state.prefixRange || getWordBeforePosition(editor, position);
 
             if (!wordRange) {
                 console.warn("PrefixSearch: No prefix found.");
@@ -96,61 +98,6 @@ export function activate(context: vscode.ExtensionContext) {
     );
 
     context.subscriptions.push(disposable);
-}
-
-function findMatchingWordPrefix(
-    editor: vscode.TextEditor,
-    startingPosition: vscode.Position,
-    prefix: string,
-) {
-    let line = startingPosition.line;
-    let character = startingPosition.character;
-    while (line >= 0) {
-        let text = editor.document.lineAt(line).text;
-        if (character > 0) {
-            text = text.substring(0, character);
-            character = -1;
-        }
-        const lastIndex = text.lastIndexOf(prefix, character);
-        if (lastIndex !== -1) {
-            return new vscode.Range(
-                new vscode.Position(line, lastIndex),
-                new vscode.Position(line, lastIndex).translate(
-                    0,
-                    prefix.length,
-                ),
-            );
-        } else {
-            line--;
-        }
-    }
-    return null;
-}
-
-function getWordBeforeCursor(
-    editor: vscode.TextEditor,
-    position: vscode.Position,
-): vscode.Range | null {
-    const lineText = editor.document.lineAt(position.line).text;
-    const cursorIndex = position.character;
-
-    let start = cursorIndex;
-
-    // Scan backward from the cursor until a non-word character is found
-    while (start > 0) {
-        const char = lineText.charAt(start - 1);
-        if (!/\w/.test(char)) {
-            break;
-        }
-        start--;
-    }
-
-    const wordStart = new vscode.Position(position.line, start);
-    if (wordStart.isEqual(position)) {
-        return null;
-    }
-
-    return new vscode.Range(wordStart, position);
 }
 
 // This method is called when your extension is deactivated
