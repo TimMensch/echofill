@@ -1,6 +1,6 @@
-# prefix-complete README
+# echofill README
 
-This is the README for your extension "prefix-complete". After writing up a brief description, we recommend including the following sections.
+This is the README for your extension "echofill". After writing up a brief description, we recommend including the following sections.
 
 ## Features
 

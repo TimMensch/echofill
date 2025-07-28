@@ -1,6 +1,6 @@
 {
-    "name": "prefix-complete",
-    "displayName": "prefix-complete",
+    "name": "echofill",
+    "displayName": "echofill",
     "description": "A keyboard command to quickly copy text from elsewhere in the same file.",
     "version": "0.0.1",
     "engines": {
