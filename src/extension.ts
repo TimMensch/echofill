@@ -1,6 +1,7 @@
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from "vscode";
+import { getPreviousPosition } from "./getPreviousPosition";
 
 type PrefixSearchState = {
     searchActive: boolean;
@@ -9,21 +10,6 @@ type PrefixSearchState = {
 };
 
 const stateMap = new WeakMap<vscode.TextDocument, PrefixSearchState>();
-
-function getPreviousPosition(
-    doc: vscode.TextDocument,
-    pos: vscode.Position,
-): vscode.Position | null {
-    if (pos.character > 0) {
-        return pos.translate(0, -1);
-    } else if (pos.line > 0) {
-        const prevLine = pos.line - 1;
-        const prevLineLength = doc.lineAt(prevLine).text.length;
-        return new vscode.Position(prevLine, prevLineLength);
-    }
-    // At start of document
-    return null;
-}
 
 function clearState(state: PrefixSearchState) {
     state.searchActive = false;
