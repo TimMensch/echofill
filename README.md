@@ -1,6 +1,8 @@
 # echofill README
 
-This is the README for your extension "echofill". After writing up a brief description, we recommend including the following sections.
+This is an attempt to recreate an old feature of Visual SlickEdit. I don't remember what the feature was called, but it allowed you to copy text from earlier in the file with very few keystrokes. 
+
+The rest of this file is just a stub for now. Will fill out after the extension actually works, which it DOES NOT at the moment.
 
 ## Features
 
