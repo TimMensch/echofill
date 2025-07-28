@@ -10,6 +10,27 @@ type PrefixSearchState = {
 
 const stateMap = new WeakMap<vscode.TextDocument, PrefixSearchState>();
 
+function getPreviousPosition(
+    doc: vscode.TextDocument,
+    pos: vscode.Position,
+): vscode.Position | null {
+    if (pos.character > 0) {
+        return pos.translate(0, -1);
+    } else if (pos.line > 0) {
+        const prevLine = pos.line - 1;
+        const prevLineLength = doc.lineAt(prevLine).text.length;
+        return new vscode.Position(prevLine, prevLineLength);
+    }
+    // At start of document
+    return null;
+}
+
+function clearState(state: PrefixSearchState) {
+    state.searchActive = false;
+    state.prefixRange = null;
+    state.foundMatchRange = null;
+}
+
 // This method is called when your extension is activated
 // Your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
@@ -39,9 +60,7 @@ export function activate(context: vscode.ExtensionContext) {
                     state.prefixRange?.end?.line !== position.line ||
                     state.prefixRange?.end?.character !== position.character
                 ) {
-                    state.searchActive = false;
-                    state.prefixRange = null;
-                    state.foundMatchRange = null;
+                    clearState(state);
                 }
             }
 
@@ -61,10 +80,22 @@ export function activate(context: vscode.ExtensionContext) {
 
             const currentRange = state.foundMatchRange || wordRange;
             const prefix = editor.document.getText(wordRange);
-            console.warn(`PrefixSearch: Prefix: ${prefix}`);
-            
-            // Search backward for a word that starts with the prefix and select it
-            const searchStartPosition = currentRange.start.translate(0, -1);
+            console.warn(
+                `PrefixSearch: Prefix: ${prefix} ${JSON.stringify(wordRange)}`,
+            );
+
+            const searchStartPosition = getPreviousPosition(
+                editor.document,
+                currentRange.start,
+            );
+
+            if (!searchStartPosition) {
+                clearState(state);
+                return;
+            }
+            console.warn(
+                `PrefixSearch: search start: ${searchStartPosition.line}, ${searchStartPosition.character}`,
+            );
             const range = findMatchingWordPrefix(
                 editor,
                 searchStartPosition,
@@ -102,7 +133,7 @@ function findMatchingWordPrefix(
         let text = editor.document.lineAt(line).text;
         if (character > 0) {
             text = text.substring(0, character);
-            character = Number.MAX_SAFE_INTEGER;
+            character = -1;
         }
         const lastIndex = text.lastIndexOf(prefix, character);
         if (lastIndex !== -1) {
@@ -123,7 +154,7 @@ function findMatchingWordPrefix(
 function getWordBeforeCursor(
     editor: vscode.TextEditor,
     position: vscode.Position,
-): vscode.Range {
+): vscode.Range | null {
     const lineText = editor.document.lineAt(position.line).text;
     const cursorIndex = position.character;
 
@@ -139,6 +170,10 @@ function getWordBeforeCursor(
     }
 
     const wordStart = new vscode.Position(position.line, start);
+    if (wordStart.isEqual(position)) {
+        return null;
+    }
+
     return new vscode.Range(wordStart, position);
 }
 

@@ -1191,6 +1191,25 @@ __metadata:
   languageName: node
   linkType: hard
 
+"echofill@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "echofill@workspace:."
+  dependencies:
+    "@types/mocha": "npm:^10.0.10"
+    "@types/node": "npm:20.x"
+    "@types/vscode": "npm:^1.102.0"
+    "@typescript-eslint/eslint-plugin": "npm:^8.31.1"
+    "@typescript-eslint/parser": "npm:^8.31.1"
+    "@vscode/test-cli": "npm:^0.0.11"
+    "@vscode/test-electron": "npm:^2.5.2"
+    esbuild: "npm:^0.25.3"
+    eslint: "npm:^9.25.1"
+    npm-run-all: "npm:^4.1.5"
+    prettier: "npm:^3.6.2"
+    typescript: "npm:^5.8.3"
+  languageName: unknown
+  linkType: soft
+
 "emoji-regex@npm:^10.3.0":
   version: 10.4.0
   resolution: "emoji-regex@npm:10.4.0"
@@ -3168,26 +3187,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"echofill@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "echofill@workspace:."
-  dependencies:
-    "@types/mocha": "npm:^10.0.10"
-    "@types/node": "npm:20.x"
-    "@types/vscode": "npm:^1.102.0"
-    "@typescript-eslint/eslint-plugin": "npm:^8.31.1"
-    "@typescript-eslint/parser": "npm:^8.31.1"
-    "@vscode/test-cli": "npm:^0.0.11"
-    "@vscode/test-electron": "npm:^2.5.2"
-    esbuild: "npm:^0.25.3"
-    eslint: "npm:^9.25.1"
-    npm-run-all: "npm:^4.1.5"
-    prettier: "npm:^3.6.2"
-    tsc: "npm:^2.0.4"
-    typescript: "npm:^5.8.3"
-  languageName: unknown
-  linkType: soft
-
 "prelude-ls@npm:^1.2.1":
   version: 1.2.1
   resolution: "prelude-ls@npm:1.2.1"
@@ -3933,15 +3932,6 @@ __metadata:
   peerDependencies:
     typescript: ">=4.8.4"
   checksum: 10c0/9806a38adea2db0f6aa217ccc6bc9c391ddba338a9fe3080676d0d50ed806d305bb90e8cef0276e793d28c8a929f400abb184ddd7ff83a416959c0f4d2ce754f
-  languageName: node
-  linkType: hard
-
-"tsc@npm:^2.0.4":
-  version: 2.0.4
-  resolution: "tsc@npm:2.0.4"
-  bin:
-    tsc: bin/tsc
-  checksum: 10c0/4651d344891d995e62ab7ca64ce0a8597bbdc2d392886c9956d15caab4dc9bfe86e759d3385b3f97c49fb5294194a161d6812673e3f51e46357c82482f32c3ab
   languageName: node
   linkType: hard
 

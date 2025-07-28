@@ -15,13 +15,22 @@
         "commands": [
             {
                 "command": "extension.prefixSearchAndSelectBackwards",
-                "title": "Prefix Search Backward"
+                "title": "Echofill Search Up"
+            },
+            {
+                "command": "extension.extendSearch",
+                "title": "Echofill Extend Match"
             }
         ],
         "keybindings": [
             {
                 "command": "extension.prefixSearchAndSelectBackwards",
-                "key": "shift+ctrl+<",
+                "key": "ctrl+alt+<",
+                "when": "editorTextFocus && !findInProgress"
+            },
+            {
+                "command": "extension.extendSearch",
+                "key": "ctrl+alt+space",
                 "when": "editorTextFocus && !findInProgress"
             }
         ]
@@ -51,11 +60,8 @@
         "esbuild": "^0.25.3",
         "eslint": "^9.25.1",
         "npm-run-all": "^4.1.5",
+        "prettier": "^3.6.2",
         "typescript": "^5.8.3"
     },
-    "packageManager": "yarn@4.9.2",
-    "dependencies": {
-        "prettier": "^3.6.2",
-        "tsc": "^2.0.4"
-    }
+    "packageManager": "yarn@4.9.2"
 }
